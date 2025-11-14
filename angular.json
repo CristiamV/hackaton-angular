@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "dist/hackaton-angular",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -65,6 +66,23 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "repo": "https://github.com/CristiamV/hackaton-angular.git",
+            "name": "CristiamV",
+            "baseHref": "/hackaton-angular/"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "hackaton-angular:build:production"
+            },
+            "development": {
+              "buildTarget": "hackaton-angular:build:development"
+            }
+          },
+          "defaultConfiguration": "production"
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"

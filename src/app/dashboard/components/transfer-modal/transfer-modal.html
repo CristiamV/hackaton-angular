@@ -1,0 +1,98 @@
+@if(open()){
+<div class="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+    <div style="background: #2e251f;" class="wood-texture border-2 border-border max-w-2xl w-full mx-4 paper-texture rounded-lg">
+        <div class="p-6 border-b border-border text-center">
+            <h2 class="text-3xl font-display text-foreground">
+                {{ isCampaignContribution() ? '⚔️ Aportar a la Causa' : '📜 Enviar Tributo' }}
+            </h2>
+        </div>
+
+        <div class="space-y-6 p-6">
+            @if(isCampaignContribution()){
+            <div class="bg-accent/20 p-4 rounded-lg border-2 border-accent">
+                <p class="text-foreground font-semibold text-center">
+                    Contribuyendo a: <span class="text-primary">{{ campaignTitle }}</span>
+                </p>
+                <p class="text-sm text-muted-foreground text-center mt-2">
+                    Los recursos irán al Fondo Común de Guerra
+                </p>
+            </div>
+            }@else {
+            <div class="space-y-2">
+                <label for="recipient" class="text-foreground font-semibold">
+                    Destinatario (Daimyō)
+                </label>
+                <select id="recipient" class="bg-muted border border-border rounded px-3 py-2 w-full">
+                    <option value="" disabled selected>Buscar Daimyō por nombre...</option>
+                    <option value="satoshi">Daimyō Satoshi</option>
+                    <option value="tokugawa">Daimyō Tokugawa</option>
+                    <option value="oda">Daimyō Oda</option>
+                </select>
+            </div>
+            }
+
+
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="space-y-2">
+                    <label for="lands" class="text-foreground font-semibold flex items-center gap-2">
+                        🏞️ Tierras
+                    </label>
+                    <input id="lands" type="number" min="0" [(ngModel)]="lands"
+                        class="bg-muted border border-border text-foreground rounded px-3 py-2 w-full" />
+                </div>
+
+                <div class="space-y-2">
+                    <label for="soldiers" class="text-foreground font-semibold flex items-center gap-2">
+                        ⚔️ Soldados
+                    </label>
+                    <input id="soldiers" type="number" min="0" [(ngModel)]="soldiers"
+                        class="bg-muted border border-border text-foreground rounded px-3 py-2 w-full" />
+                </div>
+
+                <div class="space-y-2">
+                    <label for="rice" class="text-foreground font-semibold flex items-center gap-2">
+                        🌾 Arroz
+                    </label>
+                    <input id="rice" type="number" min="0" [(ngModel)]="rice"
+                        class="bg-muted border border-border text-foreground rounded px-3 py-2 w-full" />
+                </div>
+            </div>
+
+            <div class="bg-muted/50 p-4 rounded-lg border border-border space-y-2">
+                <p class="text-sm font-semibold text-foreground">
+                    {{ isCampaignContribution()
+                    ? 'Tributo del 2% al Fondo Común:'
+                    : 'Tributo del 2% a la Tesorería del Heredero:' }}
+                </p>
+                <div class="grid grid-cols-3 gap-2 text-sm text-muted-foreground">
+                    @if (landsTribute > 0) {
+                    <div>🏞️ {{ landsTribute }} Tierras</div>
+                    }
+                    @if (soldiersTribute > 0) {
+                    <div>⚔️ {{ soldiersTribute }} Soldados</div>
+                    }
+                    @if (riceTribute > 0) {
+                    <div>🌾 {{ riceTribute }} Arroz</div>
+                    }
+                    @if (landsTribute === 0 && soldiersTribute === 0 && riceTribute === 0) {
+                    <div class="col-span-3 text-center">
+                        Ningún tributo calculado
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <button type="button"
+                class="w-full hanko-seal text-lg font-display py-3 rounded bg-primary text-primary-foreground"
+                (click)="confirm()">
+                ⛩️ Confirmar y Sellar Envío
+            </button>
+
+            <button type="button" class="w-full mt-2 py-2 text-sm text-muted-foreground" (click)="close()">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</div>
+}

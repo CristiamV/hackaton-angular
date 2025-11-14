@@ -1,0 +1,129 @@
+<div class="min-h-screen bg-background relative">
+  <!-- Background Image -->
+  <div class="fixed inset-0 z-0 opacity-20" [ngStyle]="{
+      'background-image': 'url(' + backgroundImage + ')',
+      'background-size': 'cover',
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      filter: 'blur(3px)'
+    }"></div>
+
+  <div class="relative z-10">
+    <!-- Header -->
+    <header class="border-b-2 border-[#5c4d3d] bg-card/90 backdrop-blur-sm">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-4"><img src="assets/daimyo-mon.png" alt="Mon" class="w-12 h-12">
+          <h1 class="text-2xl font-display font-bold text-foreground">Daimyō CristiamV</h1>
+        </div><button
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hanko-seal"><svg
+            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-wallet w-4 h-4 mr-2">
+            <path
+              d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1">
+            </path>
+            <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>
+          </svg>Conectar Cartera</button>
+      </div>
+    </header>
+    <!-- <header class="border-b-2 border-wooden bg-card/90 backdrop-blur-sm">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <img [src]="daimyoMon" alt="Mon" class="w-12 h-12" />
+          <div>
+            <h1 class="text-2xl font-display font-bold text-foreground">El Legado del Shōgun</h1>
+            <p class="text-sm text-muted-foreground">dApp de gobierno feudal en Cardano</p>
+          </div>
+        </div>
+
+        <button type="button" (click)="toggleWallet()" [ngClass]="{
+            'hanko-seal': !isWalletConnected,
+            'bg-secondary text-secondary-foreground': isWalletConnected,
+            'bg-primary text-primary-foreground': !isWalletConnected
+          }" class="flex items-center px-4 py-2 rounded border border-wooden">
+          <span class="mr-2">👛</span>
+          <span>
+            {{ isWalletConnected ? 'Wallet conectada' : 'Conectar Wallet' }}
+          </span>
+        </button>
+      </div>
+    </header> -->
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 space-y-12">
+      <!-- Title Section -->
+      <div class="text-center space-y-2">
+        <h2 class="text-5xl font-display font-bold text-foreground text-shadow-glow">
+          El Dominio del Daimyō
+        </h2>
+        <p class="text-muted-foreground text-lg">Gestiona tus recursos con sabiduría</p>
+      </div>
+
+      <!-- Resources Section -->
+      <section>
+        <h3 class="text-3xl font-display font-bold text-foreground mb-6 text-center">
+          🏯 Recursos del Dominio
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <app-resource-card [icon]="landIcon" iconAlt="Tierras" name="Tierras" [amount]="1250" />
+          <app-resource-card [icon]="soldiersIcon" iconAlt="Soldados" name="Soldados" [amount]="3500" />
+          <app-resource-card [icon]="riceIcon" iconAlt="Arroz" name="Arroz" [amount]="8750" />
+        </div>
+      </section>
+
+      <!-- Actions Section -->
+      <section class="flex flex-col md:flex-row gap-8 justify-center max-w-2xl mx-auto">
+        <button type="button"
+          class="hanko-seal text-lg font-display py-4 flex-1 rounded-3xl bg-primary text-primary-foreground"
+          (click)="isTransferModalOpen = true">
+          📜 Enviar Tributo
+        </button>
+        <button type="button"
+          class="text-lg bg-[#5c8547] font-display py-4 flex-1 border-2 border-wooden hover:border-primary transition-all rounded-3xl bg-secondary text-secondary-foreground"
+          (click)="scrollToCampaigns()">
+          ⚔️ Ver Campañas
+        </button>
+      </section>
+
+      <!-- Campaigns Section -->
+      <section id="campaigns-section">
+        <h3 class="text-3xl font-display font-bold text-foreground mb-6 text-center">
+          ⛩️ Consejo de Guerra
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          @for (c of campaigns; track c) {
+          <app-campaign-card [title]="c.title" [targetSoldiers]="c.targetSoldiers" [currentSoldiers]="c.currentSoldiers"
+            [targetRice]="c.targetRice" [currentRice]="c.currentRice" [deadline]="c.deadline"
+            (contribute)="handleCampaignContribute(c.title)" />
+          }
+        </div>
+      </section>
+
+      <!-- Historial de transacciones (simplificado) -->
+      <section class="max-w-4xl mx-auto">
+        <h3 class="text-2xl font-display font-bold text-foreground mb-4">
+          📜 Historial de Transacciones
+        </h3>
+        <div class="bg-card border border-wooden rounded-lg divide-y divide-border">
+          @for (tx of mockTransactions; track tx) {
+          <div class="px-4 py-3 flex justify-between text-sm">
+            <span class="text-muted-foreground">{{ tx.date }}</span>
+            <span class="text-foreground">{{ tx.action }}</span>
+          </div>
+          }
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-wooden bg-card/90 backdrop-blur-sm py-6 mt-12">
+      <div class="container mx-auto px-4 text-center text-muted-foreground">
+        Construido para el Hackathon - El Legado del Shōgun
+      </div>
+    </footer>
+  </div>
+
+  <!-- Transfer Modal -->
+  <app-transfer-modal [open]="isTransferModalOpen" [isCampaignContribution]="selectedCampaign !== null"
+    [campaignTitle]="selectedCampaign || ''" (openChange)="handleTransferModalChange($event)"></app-transfer-modal>
+</div>

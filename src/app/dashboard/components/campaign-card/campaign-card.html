@@ -1,0 +1,48 @@
+<div class="wood-texture border-2 border-wooden overflow-hidden hover:border-wooden-accent transition-all duration-300 scroll-shadow">
+  <div class="h-2 bg-gradient-to-r from-wooden-accent to-wooden"></div>
+  <div class="p-6">
+    <div class="space-y-4">
+      <h3 class="text-xl font-display font-bold text-foreground">{{ title() }}</h3>
+
+      <div class="space-y-3">
+        <div>
+          <div class="flex justify-between text-sm mb-1">
+            <span class="text-muted-foreground">⚔️ Soldados</span>
+            <span class="text-foreground font-semibold">
+              {{ currentSoldiers() | number }} / {{ targetSoldiers() | number }}
+            </span>
+          </div>
+          <div class="h-3 bg-muted rounded">
+            <div class="h-3 bg-primary rounded" [ngStyle]="{ width: soldierProgress + '%' }"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between text-sm mb-1">
+            <span class="text-muted-foreground">🌾 Arroz</span>
+            <span class="text-foreground font-semibold">
+              {{ currentRice() | number }} / {{ targetRice() | number }}
+            </span>
+          </div>
+          <div class="h-3 bg-muted rounded">
+            <div class="h-3 bg-accent rounded" [ngStyle]="{ width: riceProgress + '%' }"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-wooden">
+        <div class="flex items-center text-sm text-muted-foreground">
+          <span class="mr-1">🕒</span>
+          <span>Finaliza: {{ deadline() }}</span>
+        </div>
+        <button
+          type="button"
+          class="hanko-seal px-4 py-2 rounded bg-primary text-primary-foreground"
+          (click)="onContributeClick()"
+        >
+          Aportar a la Causa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
